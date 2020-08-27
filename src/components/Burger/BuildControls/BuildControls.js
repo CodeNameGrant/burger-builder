@@ -27,6 +27,8 @@ export default function BuildControls( props ) {
           removeIngredient={() => props.removeIngredient(control.type)} 
           disabled={props.disabled[control.type]} />
       ))}
+
+      <button className={classes.OrderButton} disabled={!props.perchasable}>Order Now</button>
     </div>
   )
 }

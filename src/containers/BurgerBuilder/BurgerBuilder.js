@@ -26,7 +26,10 @@ class BurgerBuilder extends Component {
       salad: 0,
     },
 
-    totalPrice: 4
+    totalPrice: 4,
+    
+    perchasable: false
+    
   };
   
   addIngredientHandler = ( type ) => {
@@ -46,6 +49,8 @@ class BurgerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: updatedPrice
     });
+
+    this.updatePerchaseState(updatedIngredients);
   }
 
   removeIngredientHandler = (type) => {
@@ -68,7 +73,39 @@ class BurgerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: updatedPrice
     });
+
+    this.updatePerchaseState(updatedIngredients);
   }
+
+  updatePerchaseState = (currentIngredients) => {
+    currentIngredients = { ...this.state.ingredients };
+    const ingredientsSum = Object.keys(currentIngredients)
+      .map((igKey) => {
+        return currentIngredients[igKey]
+      })
+      .reduce( ( sum, val ) => {
+        return sum + val;
+      }, 0 );
+
+      this.setState({ perchasable: ingredientsSum > 0});
+  }
+
+  // Alternate using setState(function()
+  /* updatePerchaseState = () => {
+    this.setState((prevState, props) => {
+
+      const currentIngredients = { ...prevState.ingredients };
+      const ingredientsSum = Object.keys(currentIngredients)
+        .map((igKey) => {
+          return currentIngredients[igKey]
+        })
+        .reduce( ( sum, val ) => {
+          return sum + val;
+        }, 0 );
+
+      return { perchasable: ingredientsSum > 0};
+    })
+  } */
   
   render() {
     const disableInfo = {
@@ -83,6 +120,7 @@ class BurgerBuilder extends Component {
           <Burger ingredients={this.state.ingredients} />
           <BurgerControls 
             price={this.state.totalPrice}
+            perchasable={this.state.perchasable}
             addIngredient={this.addIngredientHandler} 
             removeIngredient={this.removeIngredientHandler} 
             disabled={disableInfo} />
