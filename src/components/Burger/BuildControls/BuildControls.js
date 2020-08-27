@@ -7,10 +7,10 @@ import classes from './BuildControls.module.css'
 
 
 const controls = [
-  { label: 'Salad', type: 'salad'},
   { label: 'Bacon', type: 'bacon'},
-  { label: 'Meat', type: 'meat'},
   { label: 'Cheese', type: 'cheese'},
+  { label: 'Meat', type: 'meat'},
+  { label: 'Salad', type: 'salad'},
 ];
 
 export default function BuildControls( props ) {
