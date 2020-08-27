@@ -20,6 +20,7 @@ export default function OrderSummary( props ) {
       <ul>
         {ingredientSummary}
       </ul>
+      <p><strong>Total Price: R {props.price.toFixed(2)}</strong></p>
       <p>Continue to Checkout?</p>
       <Button type="Danger"
         clicked={props.purchaseCancelled}>Cancel</Button>
