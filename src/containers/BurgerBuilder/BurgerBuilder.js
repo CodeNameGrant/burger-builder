@@ -30,8 +30,8 @@ class BurgerBuilder extends Component {
 
     totalPrice: 4,
     
-    perchasable: false
-    
+    perchasable: false,
+    purchasing: false,
   };
   
   addIngredientHandler = ( type ) => {
@@ -80,7 +80,6 @@ class BurgerBuilder extends Component {
   }
 
   updatePerchaseState = (currentIngredients) => {
-    currentIngredients = { ...this.state.ingredients };
     const ingredientsSum = Object.keys(currentIngredients)
       .map((igKey) => {
         return currentIngredients[igKey]
@@ -109,6 +108,22 @@ class BurgerBuilder extends Component {
     })
   } */
   
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  }
+
+  /*
+    !!! IMPORTANT !!!
+    myFunc() {
+      'this' refers to the function reference
+    }
+
+    myFunc = () => {
+      'this' refers to the class
+    }
+
+  */
+
   render() {
     const disableInfo = {
       ...this.state.ingredients
@@ -119,16 +134,18 @@ class BurgerBuilder extends Component {
 
     return (
         <Aux>
-          <Modal>
+          <Modal show={this.state.purchasing}>
             <OrderSummary ingredients={this.state.ingredients} />
           </Modal>
+
           <Burger ingredients={this.state.ingredients} />
           <BurgerControls 
             price={this.state.totalPrice}
             perchasable={this.state.perchasable}
             addIngredient={this.addIngredientHandler} 
             removeIngredient={this.removeIngredientHandler} 
-            disabled={disableInfo} />
+            disabled={disableInfo} 
+            ordered={this.purchaseHandler}/>
         </Aux>
     );
   }
