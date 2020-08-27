@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Aux from '../../../hoc/Auxiliary'
+import Button from '../../ui/Button/Button'
 
 export default function OrderSummary( props ) {
 
@@ -20,8 +21,11 @@ export default function OrderSummary( props ) {
         {ingredientSummary}
       </ul>
       <p>Continue to Checkout?</p>
-      <button>Cancel</button>
-      <button>Continue</button>
+      <Button type="Danger"
+        clicked={props.purchaseCancelled}>Cancel</Button>
+
+      <Button type="Success"
+        clicked={props.purchaseContinue}>Continue</Button>
     </Aux>
   )
 }
