@@ -1,15 +1,14 @@
 import React from 'react'
 
 import Aux from '../../hoc/Auxiliary'
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 
 import classes from './Layout.module.css'
 
 export default function Layout( props ) {
   return (
     <Aux>
-      <div>
-        Toolbar, SideDraw, BackDrop
-      </div>
+      <Toolbar />
 
       <main className={classes.Content}>
         {props.children}
