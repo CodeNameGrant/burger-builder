@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Auxiliary/Auxiliary'
+import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../components/Burger/Burger';
 import BurgerControls from '../../components/Burger/BuildControls/BuildControls';
-import Modal from '../../components/ui/Modal/Modal'
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import Modal from '../../components/ui/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   bacon: 0.7,
@@ -104,20 +105,27 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    alert("Conitue");
+    const order = {
+      ingredients: this.state.ingredients,
+      price: this.state.totalPrice,
+
+      customer: {
+        name: "Grant Walker",
+        address: {
+          street: 'My Street name',
+          zipCode: '1234',
+          country: 'South Africa'
+        },
+        email: 'gr@nt.com'
+      },
+
+      deliveryMethod: 'fastest'
+    };
+
+    axios.post('/orders.json', order)
+      .then(response => {})
+      .catch(error => {});
   }
-
-  /*
-    !!! IMPORTANT !!!
-    myFunc() {
-      'this' refers to the function reference
-    }
-
-    myFunc = () => {
-      'this' refers to the class
-    }
-
-  */
 
   render() {
     const disableInfo = {
