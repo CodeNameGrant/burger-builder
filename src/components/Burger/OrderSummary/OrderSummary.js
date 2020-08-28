@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import Aux from '../../../hoc/Auxiliary'
 import Button from '../../ui/Button/Button'
 
-export default function OrderSummary( props ) {
+class OrderSummary extends Component {
+  // Doesnt have to be class, can be a functional component
+  componentDidUpdate() {
+    console.log("[OrderSummary] componentDidUpdate")
+  }
 
-  const ingredientSummary = Object.keys(props.ingredients)
-    .map( ( igKey ) => {
+  render() {
+    const ingredientSummary = Object.keys(this.props.ingredients)
+      .map((igKey) => {
+        return (
+          <li key={igKey}>
+            <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {this.props.ingredients[igKey]}
+          </li>
+        )
+      });
+
     return (
-      <li key={igKey}>
-        <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {props.ingredients[igKey]}
-      </li>
-    )});
+      <Aux>
+        <h3>Your Order</h3>
+        <p>A Delicious Burger with the following ingredients:</p>
+        <ul>
+          {ingredientSummary}
+        </ul>
+        <p><strong>Total Price: R {this.props.price.toFixed(2)}</strong></p>
+        <p>Continue to Checkout?</p>
+        <Button type="Danger"
+          clicked={this.props.purchaseCancelled}>Cancel</Button>
 
-  return (
-    <Aux>
-      <h3>Your Order</h3>
-      <p>A Delicious Burger with the following ingredients:</p>
-      <ul>
-        {ingredientSummary}
-      </ul>
-      <p><strong>Total Price: R {props.price.toFixed(2)}</strong></p>
-      <p>Continue to Checkout?</p>
-      <Button type="Danger"
-        clicked={props.purchaseCancelled}>Cancel</Button>
-
-      <Button type="Success"
-        clicked={props.purchaseContinue}>Continue</Button>
-    </Aux>
-  )
+        <Button type="Success"
+          clicked={this.props.purchaseContinue}>Continue</Button>
+      </Aux>
+    )
+  }
 }
+
+export default OrderSummary;

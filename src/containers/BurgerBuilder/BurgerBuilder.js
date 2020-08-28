@@ -52,7 +52,7 @@ class BurgerBuilder extends Component {
       totalPrice: updatedPrice
     });
 
-    this.updatePerchaseState(updatedIngredients);
+    this.updatePerchaseState();
   }
 
   removeIngredientHandler = (type) => {
@@ -76,23 +76,10 @@ class BurgerBuilder extends Component {
       totalPrice: updatedPrice
     });
 
-    this.updatePerchaseState(updatedIngredients);
+    this.updatePerchaseState();
   }
 
-  updatePerchaseState = (currentIngredients) => {
-    const ingredientsSum = Object.keys(currentIngredients)
-      .map((igKey) => {
-        return currentIngredients[igKey]
-      })
-      .reduce( ( sum, val ) => {
-        return sum + val;
-      }, 0 );
-
-      this.setState({ perchasable: ingredientsSum > 0});
-  }
-
-  // Alternate using setState(function()
-  /* updatePerchaseState = () => {
+  updatePerchaseState = () => {
     this.setState((prevState, props) => {
 
       const currentIngredients = { ...prevState.ingredients };
@@ -106,7 +93,7 @@ class BurgerBuilder extends Component {
 
       return { perchasable: ingredientsSum > 0};
     })
-  } */
+  }
   
   purchaseHandler = () => {
     this.setState({ purchasing: true });
