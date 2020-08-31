@@ -27,6 +27,7 @@ class BurgerBuilder extends Component {
   state = {
     ingredients: null,
 
+    basePrice: 4,
     totalPrice: 4,
     
     perchasable: false,
@@ -38,7 +39,10 @@ class BurgerBuilder extends Component {
   componentDidMount() {
     axios.get('https://react-my-burger-2d399.firebaseio.com/ingredients.json')
       .then(response => {
+        //const ingredients
         this.setState({ ingredients: response.data });
+        
+        this.updatePrice();
       })
       .catch(error => {
         this.setState({ error: true });
@@ -53,17 +57,10 @@ class BurgerBuilder extends Component {
     };
     updatedIngredients[type] = currentCount+1;
 
-    // Update total price
-    const currentPrice = this.state.totalPrice;
-    const updatedPrice = currentPrice + INGREDIENT_PRICES[type];
-
     // Update State
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: updatedPrice
-    });
+    this.setState({ ingredients: updatedIngredients });
 
-    this.updatePerchaseState();
+    this.updatePrice();
   }
 
   removeIngredientHandler = (type) => {
@@ -77,14 +74,24 @@ class BurgerBuilder extends Component {
     };
     updatedIngredients[type] = currentCount-1;
 
-    // Update total price
-    const currentPrice = this.state.totalPrice;
-    const updatedPrice = currentPrice - INGREDIENT_PRICES[type];
-
     // Update State
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: updatedPrice
+    this.setState({ ingredients: updatedIngredients });
+
+    this.updatePrice();
+  }
+
+  updatePrice = () => {
+    this.setState((prevState, props) => {
+
+      const ingredientsPrice = Object.keys(prevState.ingredients)
+        .reduce((price, igKey) => {
+          return price + (INGREDIENT_PRICES[igKey] * prevState.ingredients[igKey]);
+        }, 0);
+
+      return {
+        totalPrice: prevState.basePrice + ingredientsPrice
+      }
+
     });
 
     this.updatePerchaseState();
