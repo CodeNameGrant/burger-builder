@@ -14,12 +14,8 @@ export default function CheckoutSummary( props ) {
         <Burger ingredients={props.ingredients} />
       </div>
 
-      <Button
-        type="Danger"
-        onClick>Cancel</Button>
-      <Button
-        type="Success"
-        onClick>Continue</Button>
+      <Button type="Danger" clicked={props.checkoutCancelled}>Cancel</Button>
+      <Button type="Success" clicked={props.checkoutContiue}>Continue</Button>
     </div>
   )
 }
