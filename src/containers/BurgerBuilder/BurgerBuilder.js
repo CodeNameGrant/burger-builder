@@ -31,6 +31,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
+    console.log("[BurgerBuilder.js]", this.props)
     axios.get('https://react-my-burger-2d399.firebaseio.com/ingredients.json')
       .then(response => {
         //const ingredients
@@ -117,8 +118,9 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     this.setState({ loading: true,  });
+    this.props.history.push('/checkout')
 
-    const order = {
+    /* const order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice.toFixed(2),
 
@@ -141,7 +143,7 @@ class BurgerBuilder extends Component {
       })
       .catch(error => {
         this.setState({ loading: false, purchasing: false });
-      });
+      }); */
   }
 
   render() {

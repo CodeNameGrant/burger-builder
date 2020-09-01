@@ -5,6 +5,7 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
 import classes from './Burger.module.css'
 
 export default function Burger( props ) {
+  console.log("[Burger.js]", props)
 
   // 2-dimentionsal array
   let transformedIngredients = Object.keys(props.ingredients)  // Extract keys from ingredients object, which are the types
