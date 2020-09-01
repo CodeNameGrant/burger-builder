@@ -5,7 +5,7 @@ import axios from '../../axios-orders';
 import Order from '../../components/Order/Order';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-import classes from './Orders.module.css';
+// import classes from './Orders.module.css';
 
 class Orders extends Component {
   state = {
