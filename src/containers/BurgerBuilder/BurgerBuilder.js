@@ -120,6 +120,8 @@ class BurgerBuilder extends Component {
     this.setState({ loading: true,  });
 
     const urlParams = new URLSearchParams();
+    urlParams.append("price", this.state.totalPrice);
+    
     Object.keys(this.state.ingredients).forEach(igKey => {
       urlParams.append(igKey, this.state.ingredients[igKey]);
     })
@@ -129,30 +131,6 @@ class BurgerBuilder extends Component {
       search: urlParams.toString()
     })
 
-    /* const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice.toFixed(2),
-
-      customer: {
-        name: "Grant Walker",
-        address: {
-          street: 'My Street name',
-          zipCode: '1234',
-          country: 'South Africa'
-        },
-        email: 'gr@nt.com'
-      },
-
-      deliveryMethod: 'fastest'
-    };
-
-    axios.post('/orders.json', order)
-      .then(response => {
-        this.setState({ loading: false, purchasing: false });
-      })
-      .catch(error => {
-        this.setState({ loading: false, purchasing: false });
-      }); */
   }
 
   render() {
