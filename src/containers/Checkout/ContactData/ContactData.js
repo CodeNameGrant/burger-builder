@@ -15,45 +15,45 @@ class ContactData extends Component {
         type: 'input',
         attributes: {
           type: 'text',
-          placeholder: 'Full Name...',
-          value: 'Grant'
+          placeholder: 'Full Name...'
         },
+        value: ''
       },
 
       email: {
         type: 'input',
         attributes: {
           type: 'text',
-          placeholder: 'Email Address...',
-          value: 'gr@nt.com'
+          placeholder: 'Email Address...'
         },
+        value: ''
       },
 
       street: {
         type: 'input',
         attributes: {
           type: 'text',
-          placeholder: 'Streed Address...',
-          value: '123 ABC Ave'
+          placeholder: 'Streed Address...'
         },
+        value: ''
       },
 
       zipCode: {
         type: 'input',
         attributes: {
           type: 'text',
-          placeholder: 'Zip Code...',
-          value: '1234'
+          placeholder: 'Zip Code...'
         },
+        value: ''
       },
 
       country: {
         type: 'input',
         attributes: {
           type: 'text',
-          placeholder: 'Country...',
-          value: 'South Africa'
+          placeholder: 'Country...'
         },
+        value: ''
       },
 
       deliveryMethod: {
@@ -95,6 +95,19 @@ class ContactData extends Component {
       });
   }
 
+  inputChangedHandler = (event, formKey) => {
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = { ...updatedOrderForm[formKey] };
+
+    if (updatedFormElement.type === 'input') {
+      updatedFormElement.value = event.target.value;
+    }
+
+    updatedOrderForm[formKey] = updatedFormElement;
+
+    this.setState({ orderForm: updatedOrderForm });
+  }
+
   render() {
 
     let form = (
@@ -104,11 +117,13 @@ class ContactData extends Component {
             .map(formKey => {
               const formElement = this.state.orderForm[formKey];
               console.log("formElement", formElement)
-              return <Input 
+              return <Input
                 key={formKey}
                 elementType={formElement.type}
                 attributes={formElement.attributes}
-                options={formElement.options}/>
+                value={formElement.value}
+                inputChanged={(event) => this.inputChangedHandler(event, formKey)}
+                options={formElement.options} />
             })
         }
         <Button type="Success" clicked={this.orderHandler}>Order</Button>
