@@ -10,38 +10,80 @@ import classes from './ContactData.module.css';
 class ContactData extends Component {
 
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: ''
+    orderFornm: {
+      name: {
+        type: 'input',
+        config: {
+          type: 'text',
+          placeholder: 'Full Name...'
+        },
+        value: 'Grant'
+      },
+
+      email: {
+        type: 'input',
+        config: {
+          type: 'text',
+          placeholder: 'Email Address...'
+        },
+        value: 'gr@nt.com'
+      },
+
+      street: {
+        type: 'input',
+        config: {
+          type: 'text',
+          placeholder: 'Streed Address...'
+        },
+        value: '123 ABC Ave'
+      },
+
+      zipCode: {
+        type: 'input',
+        config: {
+          type: 'text',
+          placeholder: 'Zip Code...'
+        },
+        value: '1234'
+      },
+
+      Country: {
+        type: 'input',
+        config: {
+          type: 'text',
+          placeholder: 'Country...'
+        },
+        value: 'South Africa'
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+        config: {
+          options: [
+            { value: 'fastest', text: 'Fastest' },
+            { value: 'cheepest', text: 'Cheapest' }
+          ]
+        }
+      }
     },
 
     loading: false
   }
 
   orderHandler = (event) => {
-      event.preventDefault();
-      console.log("[ContactData.js] orderHandler()", this.props);
+    event.preventDefault();
+    console.log("[ContactData.js] orderHandler()", this.props);
 
-      this.setState({ loading: true });
+    this.setState({ loading: true });
 
-      const order = {
-        ingredients: this.props.ingredients,
-        price: this.props.price,
+    const order = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
 
-        customer: {
-          name: "Grant Walker",
-          address: {
-            street: 'My Street name',
-            zipCode: '1234',
-            country: 'South Africa'
-          },
-          email: 'gr@nt.com'
-        },
 
-        deliveryMethod: 'fastest'
-      };
+
+      deliveryMethod: 'fastest'
+    };
 
     axios.post('/orders.json', order)
       .then(response => {
@@ -59,6 +101,7 @@ class ContactData extends Component {
 
     let form = (
       <form>
+        <Input elementType='...' elementConfig='...' value='.../'/>
         <Input name='name' placeholder="Your Name" />
         <Input name='email' placeholder="Your Email Address" />
         <Input name='street' placeholder="Street Name" />
@@ -68,7 +111,7 @@ class ContactData extends Component {
       </form>
     );
 
-    if ( this.state.loading ) {
+    if (this.state.loading) {
       form = <Spinner />
     }
 

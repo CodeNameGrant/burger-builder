@@ -6,17 +6,27 @@ export default function Input( props ) {
 
   let inputElement = null;
 
-  switch ( props.inputType ) {
-    case 'input':
-      inputElement = <input className={classes.InputElement} {...props} />
+  switch ( props.elementType ) {
+    
+    case 'textarea':
+      inputElement = <textarea 
+        className={classes.InputElement}
+        {...props.elementConfig} />
       break;
 
-    case 'textarea':
-      inputElement = <textarea className={classes.InputElement} />
+    case 'select':
+      const options = props.config.options.map(opt => {
+        return <option value={opt.value}>{opt.text}</option>;
+      });
+      inputElement = <select className={classes.InputElement}>{options}</select>
+
       break;
     
+    case 'input':
+      inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value}/>
+      
+      // eslint-disable-next-line
     default:
-      inputElement = <input className={classes.InputElement} {...props} />
       break
   }
 
