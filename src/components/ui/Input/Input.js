@@ -3,7 +3,6 @@ import React from 'react'
 import classes from './Input.module.css';
 
 export default function Input( props ) {
-  console.log(props)
   let inputElement = null;
 
   switch ( props.elementType ) {

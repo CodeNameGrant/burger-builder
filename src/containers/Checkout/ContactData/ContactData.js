@@ -17,7 +17,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Full Name...'
         },
-        value: ''
+        value: '',
+        validation: {
+          requried: true
+        },
+        isValid: false
       },
 
       email: {
@@ -26,7 +30,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Email Address...'
         },
-        value: ''
+        value: '',
+        validation: {
+          requried: true
+        },
+        isValid: false
       },
 
       street: {
@@ -35,7 +43,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Streed Address...'
         },
-        value: ''
+        value: '',
+        validation: {
+          requried: true
+        },
+        isValid: false
       },
 
       zipCode: {
@@ -44,7 +56,12 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Zip Code...'
         },
-        value: ''
+        value: '',
+        validation: {
+          requried: true,
+          exactLength: 4
+        },
+        isValid: false
       },
 
       country: {
@@ -53,7 +70,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country...'
         },
-        value: ''
+        value: '',
+        validation: {
+          requried: true
+        },
+        isValid: false
       },
 
       deliveryMethod: {
@@ -97,13 +118,27 @@ class ContactData extends Component {
       });
   }
 
+  checkValidity = (value, rules) => {
+    if (rules.requried && value.trim() === '') {
+      return false;
+    }
+
+    if (rules.exactLength && value.trim().length !== rules.exactLength) {
+      return false;
+    }
+
+    return true;
+  }
+
   inputChangedHandler = (event, formKey) => {
     const updatedOrderForm = { ...this.state.orderForm };
     const updatedFormElement = { ...updatedOrderForm[formKey] };
 
     if (updatedFormElement.type === 'input') {
       updatedFormElement.value = event.target.value;
+      updatedFormElement.isValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
     }
+    console.log("updatedFormElement", updatedFormElement)
 
     updatedOrderForm[formKey] = updatedFormElement;
 
@@ -118,7 +153,6 @@ class ContactData extends Component {
           Object.keys(this.state.orderForm)
             .map(formKey => {
               const formElement = this.state.orderForm[formKey];
-              console.log("formElement", formElement)
               return <Input
                 key={formKey}
                 elementType={formElement.type}
