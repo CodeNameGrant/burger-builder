@@ -10,7 +10,7 @@ import classes from './ContactData.module.css';
 class ContactData extends Component {
 
   state = {
-    orderFornm: {
+    orderForm: {
       name: {
         type: 'input',
         config: {
@@ -47,7 +47,7 @@ class ContactData extends Component {
         value: '1234'
       },
 
-      Country: {
+      country: {
         type: 'input',
         config: {
           type: 'text',
@@ -57,7 +57,7 @@ class ContactData extends Component {
       },
 
       deliveryMethod: {
-        elementType: 'select',
+        type: 'select',
         config: {
           options: [
             { value: 'fastest', text: 'Fastest' },
@@ -101,12 +101,17 @@ class ContactData extends Component {
 
     let form = (
       <form>
-        <Input elementType='...' elementConfig='...' value='.../'/>
-        <Input name='name' placeholder="Your Name" />
-        <Input name='email' placeholder="Your Email Address" />
-        <Input name='street' placeholder="Street Name" />
-        <Input name='postalCode' placeholder="Postal Code" />
-
+        {
+          Object.keys(this.state.orderForm)
+            .map(formKey => {
+              const formElement = this.state.orderForm[formKey]
+              return <Input 
+                key={formKey}
+                elementType={formElement.type}
+                elementConfig={formElement.config}
+                value={formElement.value} />
+            })
+        }
         <Button type="Success" clicked={this.orderHandler}>Order</Button>
       </form>
     );

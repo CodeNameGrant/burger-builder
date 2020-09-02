@@ -3,7 +3,7 @@ import React from 'react'
 import classes from './Input.module.css';
 
 export default function Input( props ) {
-
+  console.log(props)
   let inputElement = null;
 
   switch ( props.elementType ) {
@@ -15,10 +15,13 @@ export default function Input( props ) {
       break;
 
     case 'select':
-      const options = props.config.options.map(opt => {
-        return <option value={opt.value}>{opt.text}</option>;
-      });
-      inputElement = <select className={classes.InputElement}>{options}</select>
+      inputElement = <select className={classes.InputElement}>
+        {
+          props.elementConfig.options.map(opt => {
+            return <option value={opt.value}>{opt.text}</option>;
+          })
+        }
+      </select>
 
       break;
     
