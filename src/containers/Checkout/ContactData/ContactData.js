@@ -21,7 +21,8 @@ class ContactData extends Component {
         validation: {
           requried: true
         },
-        isValid: false
+        isValid: false,
+        touched: false
       },
 
       email: {
@@ -34,7 +35,8 @@ class ContactData extends Component {
         validation: {
           requried: true
         },
-        isValid: false
+        isValid: false,
+        touched: false
       },
 
       street: {
@@ -47,7 +49,8 @@ class ContactData extends Component {
         validation: {
           requried: true
         },
-        isValid: false
+        isValid: false,
+        touched: false
       },
 
       zipCode: {
@@ -61,7 +64,8 @@ class ContactData extends Component {
           requried: true,
           exactLength: 4
         },
-        isValid: false
+        isValid: false,
+        touched: false
       },
 
       country: {
@@ -74,7 +78,8 @@ class ContactData extends Component {
         validation: {
           requried: true
         },
-        isValid: false
+        isValid: false,
+        touched: false
       },
 
       deliveryMethod: {
@@ -136,6 +141,7 @@ class ContactData extends Component {
 
     if (updatedFormElement.type === 'input') {
       updatedFormElement.value = event.target.value;
+      updatedFormElement.touched = true;
       updatedFormElement.isValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
     }
 
@@ -159,6 +165,7 @@ class ContactData extends Component {
                 value={formElement.value}
                 shouldValidate={formElement.validation}
                 isValid={formElement.isValid}
+                touched={formElement.touched}
                 inputChanged={(event) => this.inputChangedHandler(event, formKey)}
                 options={formElement.options} />
             })
