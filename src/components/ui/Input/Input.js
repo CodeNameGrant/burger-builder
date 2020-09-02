@@ -8,25 +8,25 @@ export default function Input( props ) {
 
   switch ( props.elementType ) {
     
-    case 'textarea':
+    case ( 'textarea' ):
       inputElement = <textarea 
         className={classes.InputElement}
-        {...props.elementConfig} />
+        {...props.attributes} />
       break;
 
-    case 'select':
+    case ( 'select' ):
       inputElement = <select className={classes.InputElement}>
         {
-          props.elementConfig.options.map(opt => {
-            return <option value={opt.value}>{opt.text}</option>;
+          props.options.map(opt => {
+            return <option key={opt.value} value={opt.value}>{opt.text}</option>;
           })
         }
       </select>
 
       break;
     
-    case 'input':
-      inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value}/>
+    case ( 'input' ):
+      inputElement = <input className={classes.InputElement} {...props.attributes} />
       
       // eslint-disable-next-line
     default:

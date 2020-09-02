@@ -13,57 +13,55 @@ class ContactData extends Component {
     orderForm: {
       name: {
         type: 'input',
-        config: {
+        attributes: {
           type: 'text',
-          placeholder: 'Full Name...'
+          placeholder: 'Full Name...',
+          value: 'Grant'
         },
-        value: 'Grant'
       },
 
       email: {
         type: 'input',
-        config: {
+        attributes: {
           type: 'text',
-          placeholder: 'Email Address...'
+          placeholder: 'Email Address...',
+          value: 'gr@nt.com'
         },
-        value: 'gr@nt.com'
       },
 
       street: {
         type: 'input',
-        config: {
+        attributes: {
           type: 'text',
-          placeholder: 'Streed Address...'
+          placeholder: 'Streed Address...',
+          value: '123 ABC Ave'
         },
-        value: '123 ABC Ave'
       },
 
       zipCode: {
         type: 'input',
-        config: {
+        attributes: {
           type: 'text',
-          placeholder: 'Zip Code...'
+          placeholder: 'Zip Code...',
+          value: '1234'
         },
-        value: '1234'
       },
 
       country: {
         type: 'input',
-        config: {
+        attributes: {
           type: 'text',
-          placeholder: 'Country...'
+          placeholder: 'Country...',
+          value: 'South Africa'
         },
-        value: 'South Africa'
       },
 
       deliveryMethod: {
         type: 'select',
-        config: {
-          options: [
-            { value: 'fastest', text: 'Fastest' },
-            { value: 'cheepest', text: 'Cheapest' }
-          ]
-        }
+        options: [
+          { value: 'fastest', text: 'Fastest' },
+          { value: 'cheepest', text: 'Cheapest' }
+        ]
       }
     },
 
@@ -104,12 +102,13 @@ class ContactData extends Component {
         {
           Object.keys(this.state.orderForm)
             .map(formKey => {
-              const formElement = this.state.orderForm[formKey]
+              const formElement = this.state.orderForm[formKey];
+              console.log("formElement", formElement)
               return <Input 
                 key={formKey}
                 elementType={formElement.type}
-                elementConfig={formElement.config}
-                value={formElement.value} />
+                attributes={formElement.attributes}
+                options={formElement.options}/>
             })
         }
         <Button type="Success" clicked={this.orderHandler}>Order</Button>
