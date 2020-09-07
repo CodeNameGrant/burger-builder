@@ -1,10 +1,7 @@
-
 import React from 'react'
 
 import BuildControl from './BuildControl/BuildControl'
-
 import classes from './BuildControls.module.css'
-
 
 const controls = [
   { label: 'Bacon', type: 'bacon'},
@@ -16,7 +13,7 @@ const controls = [
 export default function BuildControls( props ) {
   return (
     <div className={classes.BuildControls}>
-
+    
       <p>Current Price: <strong>R {props.price.toFixed(2)}</strong></p>
 
       {controls.map((control) => (

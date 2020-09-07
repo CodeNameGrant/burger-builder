@@ -12,18 +12,10 @@ import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actionTypes from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-  bacon: 0.7,
-  cheese: 0.4,
-  meat: 1.3,
-  salad: 0.5
-};
+
 
 class BurgerBuilder extends Component {
   state = {
-    basePrice: 4,
-    totalPrice: 4,
-    
     perchasable: false,
     purchasing: false,
     loading: false,
@@ -43,54 +35,6 @@ class BurgerBuilder extends Component {
   //       this.setState({ error: true });
   //     })
   // }
-  
-  addIngredientHandler = ( type ) => {
-    // Update Ingredient count
-    const currentCount = this.state.ingredients[type];
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = currentCount+1;
-
-    // Update State
-    this.setState({ ingredients: updatedIngredients });
-
-    this.updatePrice();
-  }
-
-  removeIngredientHandler = (type) => {
-    // Update Ingredient count
-    const currentCount = this.state.ingredients[type];
-    if (currentCount <= 0) {
-      return;
-    }
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = currentCount-1;
-
-    // Update State
-    this.setState({ ingredients: updatedIngredients });
-
-    this.updatePrice();
-  }
-
-  updatePrice = () => {
-    this.setState((prevState, props) => {
-
-      const ingredientsPrice = Object.keys(prevState.ingredients)
-        .reduce((price, igKey) => {
-          return price + (INGREDIENT_PRICES[igKey] * prevState.ingredients[igKey]);
-        }, 0);
-
-      return {
-        totalPrice: prevState.basePrice + ingredientsPrice
-      }
-
-    });
-
-    this.updatePerchaseState();
-  }
 
   updatePerchaseState = () => {
     this.setState((prevState, props) => {
@@ -117,10 +61,10 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true,  });
+    this.setState({ loading: true });
 
     const urlParams = new URLSearchParams();
-    urlParams.append("price", this.state.totalPrice);
+    urlParams.append("price", this.props.totalPrice);
     
     Object.keys(this.state.ingredients).forEach(igKey => {
       urlParams.append(igKey, this.state.ingredients[igKey]);
@@ -147,7 +91,7 @@ class BurgerBuilder extends Component {
     if (this.props.ingredients) {
       orderSummary = <OrderSummary 
         ingredients={this.props.ingredients}
-        price={this.state.totalPrice}
+        price={this.props.totalPrice}
         purchaseCancelled={this.purchaseCancelledHandler}
         purchaseContinue={this.purchaseContinueHandler} />;
 
@@ -155,7 +99,7 @@ class BurgerBuilder extends Component {
           <Aux>
             <Burger ingredients={this.props.ingredients} />
               <BurgerControls 
-                price={this.state.totalPrice}
+                price={this.props.totalPrice}
                 perchasable={this.state.perchasable}
                 addIngredient={this.props.onIngredientAdded} 
                 removeIngredient={this.props.onIngredientRemoved} 
@@ -183,7 +127,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = ( state ) => {
   return {
-    ingredients: state.ingredients
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
   };
 }
 
