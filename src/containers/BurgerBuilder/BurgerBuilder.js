@@ -13,7 +13,6 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actionTypes from '../../store/actions';
 
 
-
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
@@ -58,18 +57,7 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     this.setState({ loading: true });
 
-    const urlParams = new URLSearchParams();
-    urlParams.append("price", this.props.totalPrice);
-
-    Object.keys(this.state.ingredients).forEach(igKey => {
-      urlParams.append(igKey, this.state.ingredients[igKey]);
-    })
-
-    this.props.history.push({
-      pathname: '/checkout',
-      search: urlParams.toString()
-    })
-
+    this.props.history.push('/checkout');
   }
 
   render() {
