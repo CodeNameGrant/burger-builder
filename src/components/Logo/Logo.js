@@ -1,6 +1,6 @@
 import React from 'react'
 
-import BurgerLogo from '../../assests/images/logo.png';
+import BurgerLogo from '../../assets/images/logo.png';
 import classes from './Logo.module.css';
 
 export default function Logo( props ) {
