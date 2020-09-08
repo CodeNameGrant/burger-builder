@@ -28,8 +28,8 @@ export const placeOrder = (orderData) => {
     
     axios.post('/orders.json', orderData)
       .then(response => {
-        console.log(response.data);
-        dispatch(orderSuccessful(response.data, orderData));
+        // console.log(response.data);
+        dispatch(orderSuccessful(response.data.name, orderData));
 
       })
       .catch(error => {

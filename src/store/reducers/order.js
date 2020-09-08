@@ -17,7 +17,10 @@ const reducer = (state = initialState, action) => {
 
     case (actionTypes.ORDER_SUCCESSFUL):
       updatedState.loading = false;
-      const newOrder = { ...action.orderData, id: action.orderId };
+      const newOrder = { 
+        ...action.orderData, 
+        id: action.orderId
+      };
       updatedState.orders = state.orders.concat(newOrder)
 
       break;
