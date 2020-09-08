@@ -6,5 +6,6 @@ export {
 
 export {
   placeOrder,
-  orderInit
+  orderInit,
+  fetchOrders
 } from './order';

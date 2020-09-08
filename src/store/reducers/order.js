@@ -36,6 +36,22 @@ const reducer = (state = initialState, action) => {
 
       break;
 
+    case (actionTypes.FETCH_ORDERS_START):
+      updatedState.loading = true;
+
+      break;
+
+    case (actionTypes.FETCH_ORDERS_SUCCESS):
+      updatedState.loading = false;
+      updatedState.orders = action.orders;
+
+      break;
+
+    case (actionTypes.FETCH_ORDERS_FAILED):
+      updatedState.loading = false;
+
+      break;
+
     default:
       break;
   }
