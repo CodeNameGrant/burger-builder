@@ -98,11 +98,19 @@
 }
 
 .Salad {
-    width: 85%;
-    height: 7%;
-    margin: 2% auto;
-    background: linear-gradient(#228c1d, #91ce50);
-    border-radius: 20px;
+  width: 85%;
+  height: 7%;
+  margin: 2% auto;
+  background: linear-gradient(#228c1d, #91ce50);
+  border-radius: 20px;
+}
+
+.Avo {
+  width: 85%;
+  height: 7%;
+  margin: 2% auto;
+  background: linear-gradient(#91ce50, #228c1d);
+  border-radius: 20px;
 }
 
 .Bacon {

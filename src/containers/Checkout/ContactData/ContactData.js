@@ -57,7 +57,7 @@ class ContactData extends Component {
       zipCode: {
         type: 'input',
         attributes: {
-          type: 'text',
+          type: 'number',
           placeholder: 'Zip Code...'
         },
         value: '',
