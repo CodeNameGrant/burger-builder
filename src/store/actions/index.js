@@ -5,7 +5,6 @@ export {
 } from './burgerBuilder';
 
 export {
-  orderSuccessful,
-  orderFailed,
-  placeOrder
+  placeOrder,
+  orderInit
 } from './order';
