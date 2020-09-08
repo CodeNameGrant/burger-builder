@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NavigationItem from './NavgationItem/NavigationItem'
+import NavigationItem from './NavigationItem/NavigationItem'
 
 import classes from './NavigationItems.module.css';
 
@@ -9,6 +9,7 @@ export default function NavigationItems() {
     <ul className={classes.NavigationItems}>
       <NavigationItem link="/">Burger Builder</NavigationItem>
       <NavigationItem link="/orders">Orders</NavigationItem>
+      <NavigationItem link="/auth">Authenticate</NavigationItem>
     </ul>
   )
 }
