@@ -12,7 +12,7 @@ const initialState = {
   ingredients: null,
 
   basePrice: 4,
-  totalPrice: 4,
+  totalPrice: 4,  // Same as base price initially
 
   error: false
 }
@@ -52,10 +52,10 @@ const reducer = (state = initialState, action) => {
   return updatedState;
 }
 
-const addRemoveIngredient = (ingredients, ingredientName, add) => {
+const addRemoveIngredient = (ingredients, ingredientName, addIngredient) => {
   const updatedIngredients = { ...ingredients };
 
-  if (add) {
+  if (addIngredient) {
     updatedIngredients[ingredientName] = ingredients[ingredientName] + 1;
   } else {
     updatedIngredients[ingredientName] = ingredients[ingredientName] - 1;
