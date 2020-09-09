@@ -9,6 +9,7 @@ import Input from '../../../components/ui/Input/Input';
 import classes from './ContactData.module.css';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from "../../../store/actions/index";
+import { updateObject, checkValidity } from '../../../shared/utility';
 
 class ContactData extends Component {
 
@@ -103,7 +104,6 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    console.log("[ContactData.js] orderHandler()", this.props);
 
     const formData = {};
     Object.keys(this.state.orderForm)
@@ -120,31 +120,19 @@ class ContactData extends Component {
     this.props.onPlaceOrder(orderData, this.props.token);
   }
 
-  checkValidity = (value, rules) => {
-    if (rules.requried && value.trim() === '') {
-      return false;
-    }
-
-    if (rules.exactLength && value.trim().length !== rules.exactLength) {
-      return false;
-    }
-
-    return true;
-  }
-
-  inputChangedHandler = (event, formKey) => {
-    const updatedOrderForm = { ...this.state.orderForm };
-    const updatedFormElement = { ...updatedOrderForm[formKey] };
-
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.touched = true;
-    updatedFormElement.isValid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-
-    updatedOrderForm[formKey] = updatedFormElement;
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+      value: event.target.value,
+      touched: true,
+      isValid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+    });
+    
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFormElement
+    });
 
     let formIsValid = true;
     for (let formKey in updatedOrderForm) {
-      //console.log(formKey, updatedOrderForm[formKey] )
       formIsValid = updatedOrderForm[formKey].isValid && formIsValid;
     }
 

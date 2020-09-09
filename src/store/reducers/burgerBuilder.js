@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
+import { updateObject } from '../../shared/utility';
 
 const INGREDIENT_PRICES = {
   bacon: 0.7,
@@ -18,42 +19,54 @@ const initialState = {
   error: false
 }
 
+const setIngredients = (state, action) => {
+  return updateObject(state, {
+    ingredients: action.ingredients,
+    totalPrice: calculateTotalPrice(state.basePrice, action.ingredients),
+    building: burgerHasIngredients(action.ingredients),
+    error: false
+  })
+}
+
+
+const addIngredient = (state, action) => {
+  const updatedIngredients = addRemoveIngredient(state.ingredients, action.ingredientName, true);
+
+  return updateObject(state, {
+    ingredients: updatedIngredients,
+    totalPrice: calculateTotalPrice(state.basePrice, updatedIngredients),
+    building: burgerHasIngredients(updatedIngredients)
+  });
+}
+
+const removeIngredient = (state, action) => {
+  const updatedIngredients = addRemoveIngredient(state.ingredients, action.ingredientName, false);
+
+  return updateObject(state, {
+    ingredients: updatedIngredients,
+    totalPrice: calculateTotalPrice(state.basePrice, updatedIngredients),
+    building: burgerHasIngredients(updatedIngredients)
+  });
+}
+
+const fetchIngredientsFailed = (state, action) => {
+  return updateObject(state, {
+    error: true
+  });
+}
+
 const reducer = (state = initialState, action) => {
-  const updatedState = { ...state };
 
   switch (action.type) {
 
-    case (actionTypes.ADD_INGREDIENT):
-      updatedState.ingredients = addRemoveIngredient(state.ingredients, action.ingredientName, true);
-      updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
-      updatedState.building = burgerHasIngredients(updatedState.ingredients);
-
-      break;
-
-    case (actionTypes.REMOVE_INGREDIENT):
-      updatedState.ingredients = addRemoveIngredient(state.ingredients, action.ingredientName, false);
-      updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
-      updatedState.building = burgerHasIngredients(updatedState.ingredients);
-
-      break;
-    case (actionTypes.SET_INGREDIENTS):
-      updatedState.ingredients = action.ingredients;
-      updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
-      updatedState.building = burgerHasIngredients(updatedState.ingredients);
-      updatedState.error = false;
-      
-      break;
-
-    case (actionTypes.FETCH_INGREDIENTS_FAILED):
-      updatedState.error = true;
-
-      break;
+    case (actionTypes.ADD_INGREDIENT): return addIngredient(state, action);
+    case (actionTypes.REMOVE_INGREDIENT): return removeIngredient(state, action);
+    case (actionTypes.SET_INGREDIENTS): return setIngredients(state, action);
+    case (actionTypes.FETCH_INGREDIENTS_FAILED): return fetchIngredientsFailed(state, action);
 
     default:
-      break;
+      return state;
   }
-
-  return updatedState;
 }
 
 const addRemoveIngredient = (ingredients, ingredientName, addIngredient) => {
@@ -83,7 +96,7 @@ const burgerHasIngredients = (ingredients) => {
       return count + ingredients[igKey]
     }, 0)
 
-    return ingredientCount !== 0;
+  return ingredientCount !== 0;
 }
 
 export default reducer;

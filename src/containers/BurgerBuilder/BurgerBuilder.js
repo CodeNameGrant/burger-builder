@@ -19,8 +19,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    console.log("[BurgerBuilder.js]", this.props)
-    this.props.onIngredientInit();
+    this.props.onBuilderInit();
   }
 
   updatePerchaseState = () => {
@@ -109,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIngredientInit: () => dispatch(actions.initIngredients()),
+    onBuilderInit: () => dispatch(actions.fetchIngredients()),
     onIngredientAdded: (ingredientName) => dispatch(actions.addIngredient(ingredientName)),
     onIngredientRemoved: (ingredientName) => dispatch(actions.removeIngredient(ingredientName)),
     onOrderInit: () => dispatch(actions.orderInit()),

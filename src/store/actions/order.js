@@ -9,7 +9,7 @@ export const placeOrderStart = () => {
 
 export const orderSuccessful = (id, orderData) => {
   return {
-    type: actionTypes.ORDER_SUCCESSFUL,
+    type: actionTypes.ORDER_SUCCESS,
     orderId: id,
     orderData
   }
@@ -28,7 +28,6 @@ export const placeOrder = (orderData, token) => {
 
     axios.post('/orders.json?auth=' + token, orderData)
       .then(response => {
-        // console.log(response.data);
         dispatch(orderSuccessful(response.data.name, orderData));
 
       })
