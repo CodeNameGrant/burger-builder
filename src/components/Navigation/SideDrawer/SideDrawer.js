@@ -24,7 +24,7 @@ export default function SideDrawer( props ) {
         </div>
 
         <nav>
-          <NavigationItems />
+          <NavigationItems authenticated={props.authenticated}/>
         </nav>
       </div>
     </Aux>
