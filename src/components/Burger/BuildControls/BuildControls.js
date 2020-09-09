@@ -29,7 +29,7 @@ export default function BuildControls( props ) {
       <button 
         className={classes.OrderButton} 
         disabled={!props.perchasable}
-        onClick={props.ordered}>Order Now</button>
+        onClick={props.ordered}>{props.authenticated ? 'Order Now' : 'Login To Place Order'}</button>
     </div>
   )
 }
