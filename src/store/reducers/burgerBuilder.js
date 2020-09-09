@@ -10,6 +10,7 @@ const INGREDIENT_PRICES = {
 
 const initialState = {
   ingredients: null,
+  building: false,
 
   basePrice: 4,
   totalPrice: 4,  // Same as base price initially
@@ -25,17 +26,20 @@ const reducer = (state = initialState, action) => {
     case (actionTypes.ADD_INGREDIENT):
       updatedState.ingredients = addRemoveIngredient(state.ingredients, action.ingredientName, true);
       updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
+      updatedState.building = burgerHasIngredients(updatedState.ingredients);
 
       break;
 
     case (actionTypes.REMOVE_INGREDIENT):
       updatedState.ingredients = addRemoveIngredient(state.ingredients, action.ingredientName, false);
       updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
+      updatedState.building = burgerHasIngredients(updatedState.ingredients);
 
       break;
     case (actionTypes.SET_INGREDIENTS):
       updatedState.ingredients = action.ingredients;
       updatedState.totalPrice = calculateTotalPrice(state.basePrice, updatedState.ingredients);
+      updatedState.building = burgerHasIngredients(updatedState.ingredients);
       updatedState.error = false;
       
       break;
@@ -71,6 +75,16 @@ const calculateTotalPrice = (basePrice, ingredients) => {
     }, 0);
 
   return basePrice + ingredientsPrice;
+}
+
+const burgerHasIngredients = (ingredients) => {
+  const ingredientCount = Object.keys(ingredients)
+    .reduce((count, igKey) => {
+      return count + ingredients[igKey]
+    }, 0)
+    console.log(ingredientCount)
+
+    return ingredientCount !== 0;
 }
 
 export default reducer;
