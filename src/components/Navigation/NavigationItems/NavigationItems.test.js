@@ -11,21 +11,35 @@ configure({
 
 describe('<NavigtionItems />', () => {
   let wrapper;
-  
+
   beforeEach(() => {
     wrapper = shallow(<NavigationItems />);
   });
 
-  it('should render two <NavigationItem /> elements if not authenticated', () => {
+  it('should render two exact <NavigationItem /> elements if not authenticated', () => {
     expect(wrapper.find(NavigationItem)).toHaveLength(2);
+
+    // const navItems = [
+    //   <NavigationItem link='/'>Burger Builder</NavigationItem>,
+    //   <NavigationItem link='/auth'>Login / Signup</NavigationItem>
+    // ];
+    // expect(wrapper.contains(navItems)).toEqual(true);
+
+    expect(wrapper.contains(<NavigationItem link='/'>Burger Builder</NavigationItem>)).toEqual(true);
+    expect(wrapper.contains(<NavigationItem link='/auth'>Login / Signup</NavigationItem>)).toEqual(true);
 
   });
 
-  it('should render three <NavigationItem /> elements if authenticated', () => {
-    //wrapper = shallow(<NavigationItems authenticated/>);
+  it('should render three exact <NavigationItem /> elements if authenticated', () => {
     wrapper.setProps({ authenticated: true });
 
     expect(wrapper.find(NavigationItem)).toHaveLength(3);
 
-  })
+    const navItems = [
+      <NavigationItem link='/'>Burger Builder</NavigationItem>,
+      <NavigationItem link='/orders'>Orders</NavigationItem>,
+      <NavigationItem link='/logout'>Logout</NavigationItem>
+    ];
+    expect(wrapper.contains(navItems)).toEqual(true);
+  });
 });
