@@ -82,7 +82,6 @@ const burgerHasIngredients = (ingredients) => {
     .reduce((count, igKey) => {
       return count + ingredients[igKey]
     }, 0)
-    console.log(ingredientCount)
 
     return ingredientCount !== 0;
 }
