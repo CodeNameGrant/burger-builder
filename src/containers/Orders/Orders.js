@@ -22,6 +22,9 @@ class Orders extends Component {
           price={order.price} />
       ));
 
+      if (orders.length === 0) {
+        orders = <p>You have not placed any orders</p>
+      }
     }
     return (
       <div>
