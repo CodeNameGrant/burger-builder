@@ -42,9 +42,7 @@ class Auth extends Component {
         isValid: false,
         touched: false
       },
-    },
-
-    isSignup: true
+    }
   }
 
   componentDidMount = () => {
@@ -65,20 +63,19 @@ class Auth extends Component {
     this.setState({ controls: updatedControls });
   }
 
-  switchAuthModeHandler = () => {
-    this.setState((prevState) => {
-      return { isSignup: !prevState.isSignup }
-    });
-  }
-
-  submitHandler = (event) => {
+  onAuthHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(
       this.state.controls.email.value,
-      this.state.controls.password.value,
-      this.state.isSignup);
+      this.state.controls.password.value);
   }
 
+  onSignupHandler = (event) => {
+    event.preventDefault();
+    this.props.onSignup(
+      this.state.controls.email.value,
+      this.state.controls.password.value);
+  }
 
   render() {
 
@@ -116,16 +113,12 @@ class Auth extends Component {
     return (
       <div className={classes.Auth}>
         {errorMsg}
-        <form onSubmit={this.submitHandler}>
+        <form>
           {form}
-          <Button type="Success">Submit</Button>
         </form>
-
-        <Button
-          type="Danger"
-          clicked={this.switchAuthModeHandler}>
-          Switch To {this.state.isSignup ? 'Login' : 'Signup'}
-        </Button>
+        {this.props.signupComplete ? <p>Your account has been created, please login to authenticate</p> : null}
+        <Button type="Success" clicked={(event) => this.onAuthHandler(event)}>Login</Button>
+        <Button type="Danger" clicked={(event) => this.onSignupHandler(event)}>Signup</Button>
       </div>
     )
   }
@@ -137,13 +130,15 @@ const mapStateToProps = (state) => {
     error: state.auth.error,
     authenticated: state.auth.token !== null,
     buildingBurger: state.burgerBuilder.building,
-    authRedirectPath: state.auth.authRedirectPath
+    authRedirectPath: state.auth.authRedirectPath,
+    signupComplete: state.auth.signupComplete
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+    onSignup: (email, password) => dispatch(actions.signup(email, password)),
     onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
   };
 }
