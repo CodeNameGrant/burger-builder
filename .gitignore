@@ -14,6 +14,10 @@
 # IDE
 /.vscode
 
+# Hosting
+*firebase*
+
+
 # misc
 .DS_Store
 .env.local
