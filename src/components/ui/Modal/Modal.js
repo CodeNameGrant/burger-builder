@@ -7,10 +7,6 @@ import classes from './Modal.module.css';
 
 const Modal = props => {
 
-  /* shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.show !== props.show || nextProps.children !== props.children;
-  } */
-
   return (
     <Aux>
       <Backdrop show={props.show} click={props.modalClosed} />
