@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -20,43 +20,43 @@ const asyncAuth = asyncComponent(() => {
   return import('./containers/Auth/Auth');
 });
 
-class App extends Component {
+const App = props => {
 
-  componentDidMount = () => {
-    this.props.onTryAutoLogin();
-  }
+  // Simulate ComponentDidMount() by passing an empty array to useEffect()
+  const { onTryAutoLogin } = props;
+  useEffect(() => {
+    onTryAutoLogin();
+  }, [onTryAutoLogin]);
 
-  render() {
-    let routes = (
-      /* Default Routes */
+  let routes = (
+    /* Default Routes */
+    <Switch>
+      <Route path="/" exact component={BurgerBuilder} />
+      <Route path="/auth" component={asyncAuth} />
+      <Redirect to='/' />
+    </Switch>
+  );
+  if (props.authenticated) {
+    routes = (
+      /* Authenticated Routes */
       <Switch>
         <Route path="/" exact component={BurgerBuilder} />
         <Route path="/auth" component={asyncAuth} />
+        <Route path="/orders" component={asyncOrders} />
+        <Route path="/checkout" component={asyncCheckout} />
+        <Route path="/logout" component={Logout} />
         <Redirect to='/' />
       </Switch>
     );
-    if (this.props.authenticated) {
-      routes = (
-        /* Authenticated Routes */
-        <Switch>
-          <Route path="/" exact component={BurgerBuilder} />
-          <Route path="/auth" component={asyncAuth} />
-          <Route path="/orders" component={asyncOrders} />
-          <Route path="/checkout" component={asyncCheckout} />
-          <Route path="/logout" component={Logout} />
-          <Redirect to='/' />
-        </Switch>
-      );
-    }
-
-    return (
-      <div>
-        <Layout>
-          {routes}
-        </Layout>
-      </div>
-    );
   }
+
+  return (
+    <div>
+      <Layout>
+        {routes}
+      </Layout>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
